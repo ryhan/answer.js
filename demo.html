@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Answering Demo</title>
+
+  <script src="lib/jquery.js"></script>
+  <script src="lib/underscore.js"></script>
+  <script src="lib/natural.js"></script>
+  <script src="lib/jspos/lexer.js"></script>
+  <script src="lib/jspos/lexicon.js_"></script>
+  <script src="lib/jspos/POSTagger.js"></script>
+
+  <script src="answer.js"></script>
+
+</head>
+<body>
+
+  <article>
+  A soap bubble is an extremely thin film of soapy water enclosing air that forms a hollow sphere with an iridescent surface. Soap bubbles usually last for only a few seconds before bursting, either on their own or on contact with another object. They are often used for children's enjoyment, but they are also used in artistic performances. Assembling several bubbles results in a foam.
+  Mathematics
+  Soap bubbles are physical illustrations of the complex mathematical problem of minimal surface. They will assume the shape of least surface area possible containing a given volume. A true minimal surface is more properly illustrated by a soap film, which has equal pressure on inside as outside, hence is a surface with zero mean curvature. A soap bubble is a closed soap film: due to the difference in outside and inside pressure, it is a surface of constant mean curvature.
+  While it has been known since 1884 that a spherical soap bubble is the least-area way of enclosing a given volume of air (a theorem of H. A. Schwarz), it was not until 2000 that it was proven that two merged soap bubbles provide the optimum way of enclosing two given volumes of air of different size with the least surface area. This has been dubbed the Double Bubble conjecture.[1]
+  Due to these qualities soap bubbles films have been used with practical problem solving application. Structural engineer Frei Otto used soap bubble films to determine the geometry of a sheet of least surface area that spreads between several points, and translated this geometry into revolutionary tensile roof structures.[2] A famous example is his West German Pavilion at Expo 67 in Montreal.  
+  Physics
+  Merging
+  When two bubbles merge, they adopt a shape which makes the sum of their surface areas as small as possible, compatible with the volume of air each bubble encloses. If the bubbles are of equal size, their common wall is flat. Else, their common wall bulges into the larger bubble, since the smaller one has a higher internal pressure than the larger one, as predicted by the Young–Laplace equation.
+  At a point where three or more bubbles meet, they sort themselves out so that only three bubble walls meet along a line. Since the surface tension is the same in each of the three surfaces, the three angles between them must be equal to 120°. This is the most efficient choice, again, which is also the reason why the cells of a beehive have the same 120° angle and form hexagons[citation needed]. Only four bubble walls can meet at a point, with the lines where triplets of bubble walls meet separated by cos−1(−1/3) ≈ 109.47°. All these rules, known as Plateau's laws, determine how a foam is built from bubbles.
+  Stability
+  The longevity of a soap bubble is limited by the rupture of the very thin layer of water which constitutes its surface, namely a micron-thick soap film. It is thus sensitive to :
+  Drainage within the soap film: water falls down due to gravity. This can be slowed down by increasing the water viscosity, for instance by adding glycerol. Still, there is an ultimate height limit, which is the capillary length, very high for soap bubbles: around 4 metres. In principle, there is no limit in the length it can reach.
+  Evaporation: this can be slowed down by blowing bubbles in a wet atmosphere, or by adding some sugar to the water.
+  Dirt and fat: when the bubble touches the ground, a wall, or our skin, it usually ruptures the soap film. This can be prevented by wetting these surfaces with water (preferably containing some soap).
+  Bubbles in education
+  Bubbles can be effectively used to teach and explore a wide variety of concepts to even young children. Flexibility, color formation, reflective or mirrored surfaces, concave and convex surfaces, transparency, a variety of shapes (circle, square, triangle, sphere, cube, tetrahedron, hexagon), elastic properties, comparative sizing... as well as the more esoteric properties of bubbles listed on this page. Bubbles are useful in teaching concepts starting from 2 years old and into college years. A Swiss university professor, Dr. Natalie Hartzell, has theorized that usage of artificial bubbles for entertainment purposes of young children has shown a positive effect in the region of the child's brain that controls motor skills and is responsible for coordination with children exposed to bubbles at a young age showing measurably better motion skills that those who were not.[3]
+  </article>
+
+  <script>
+    reader = new answer()
+    reader.read($('article').text())
+    var answers = reader.match("What is the longevity of a soap bubble limited by?")
+
+    console.log(answers[0][1])
+  </script>
+
+</body>
+</html>
