@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Answering Demo</title>
+  <title>Search Demo</title>
 
   <script src="lib/jquery.js"></script>
   <script src="lib/underscore.js"></script>
@@ -12,15 +12,66 @@
 
   <script src="answer.js"></script>
 
+  <link rel="stylesheet" type="text/css" href="search.css">
+
 </head>
 <body>
 
-  <article>
-  A soap bubble is an extremely thin film of soapy water enclosing air that forms a hollow sphere with an iridescent surface. Soap bubbles usually last for only a few seconds before bursting, either on their own or on contact with another object. They are often used for children's enjoyment, but they are also used in artistic performances. Assembling several bubbles results in a foam.
-  Mathematics
-  Soap bubbles are physical illustrations of the complex mathematical problem of minimal surface. They will assume the shape of least surface area possible containing a given volume. A true minimal surface is more properly illustrated by a soap film, which has equal pressure on inside as outside, hence is a surface with zero mean curvature. A soap bubble is a closed soap film: due to the difference in outside and inside pressure, it is a surface of constant mean curvature.
-  While it has been known since 1884 that a spherical soap bubble is the least-area way of enclosing a given volume of air (a theorem of H. A. Schwarz), it was not until 2000 that it was proven that two merged soap bubbles provide the optimum way of enclosing two given volumes of air of different size with the least surface area. This has been dubbed the Double Bubble conjecture.[1]
-  Due to these qualities soap bubbles films have been used with practical problem solving application. Structural engineer Frei Otto used soap bubble films to determine the geometry of a sheet of least surface area that spreads between several points, and translated this geometry into revolutionary tensile roof structures.[2] A famous example is his West German Pavilion at Expo 67 in Montreal.  
+<script>
+$(function() {
+
+  // Our search and results fields.
+  $search = $('#search');
+  $input = $('#search input');
+  $results = $('#search .results');
+
+  // Preprocess the article to be read.
+  reader = new answer();
+  reader.read($('article').text());
+
+  // Create a function that spots relevant text in the article.
+  // Use Underscore to prevent the function from being called too often.
+  var spot = _.debounce(function(query){
+    var answers = reader.match(query);
+
+    var container = $('<div />');
+    _.map(answers.slice(0,3), function(answer){
+      container.append($('<li />').text(answer[1] + "."));
+    });
+
+    $results.html(container.html());
+  }, 100);
+
+  $input.focus(function(){
+    $search.addClass('active');
+  });
+
+  $input.blur(function(){
+    $search.removeClass('active');
+  });
+
+  $input.keyup(function(){
+    spot($input.val());
+  });
+
+});  
+</script>
+
+  <form id="search" onsubmit="return false;">
+    <div class="content">
+      <input type="search" placeholder="Search"/>
+      <ul class="results"></ul>
+    </div>
+  </form>
+
+  <article class="content">
+  <p>
+  A soap bubble is an extremely thin film of soapy water enclosing air that forms a hollow sphere with an iridescent surface. Soap bubbles usually last for only a few seconds before bursting, either on their own or on contact with another object. They are often used for children's enjoyment, but they are also used in artistic performances. Assembling several bubbles results in a foam.</p>
+  
+  <h1>Mathematics</h1>
+  <p>Soap bubbles are physical illustrations of the complex mathematical problem of minimal surface. They will assume the shape of least surface area possible containing a given volume. A true minimal surface is more properly illustrated by a soap film, which has equal pressure on inside as outside, hence is a surface with zero mean curvature. A soap bubble is a closed soap film: due to the difference in outside and inside pressure, it is a surface of constant mean curvature.</p>
+  <p>While it has been known since 1884 that a spherical soap bubble is the least-area way of enclosing a given volume of air (a theorem of H. A. Schwarz), it was not until 2000 that it was proven that two merged soap bubbles provide the optimum way of enclosing two given volumes of air of different size with the least surface area. This has been dubbed the Double Bubble conjecture.[1]</p>
+  <p>Due to these qualities soap bubbles films have been used with practical problem solving application. Structural engineer Frei Otto used soap bubble films to determine the geometry of a sheet of least surface area that spreads between several points, and translated this geometry into revolutionary tensile roof structures.[2] A famous example is his West German Pavilion at Expo 67 in Montreal.</p>  
   Physics
   Merging
   When two bubbles merge, they adopt a shape which makes the sum of their surface areas as small as possible, compatible with the volume of air each bubble encloses. If the bubbles are of equal size, their common wall is flat. Else, their common wall bulges into the larger bubble, since the smaller one has a higher internal pressure than the larger one, as predicted by the Young–Laplace equation.
@@ -33,14 +84,6 @@
   Bubbles in education
   Bubbles can be effectively used to teach and explore a wide variety of concepts to even young children. Flexibility, color formation, reflective or mirrored surfaces, concave and convex surfaces, transparency, a variety of shapes (circle, square, triangle, sphere, cube, tetrahedron, hexagon), elastic properties, comparative sizing... as well as the more esoteric properties of bubbles listed on this page. Bubbles are useful in teaching concepts starting from 2 years old and into college years. A Swiss university professor, Dr. Natalie Hartzell, has theorized that usage of artificial bubbles for entertainment purposes of young children has shown a positive effect in the region of the child's brain that controls motor skills and is responsible for coordination with children exposed to bubbles at a young age showing measurably better motion skills that those who were not.[3]
   </article>
-
-  <script>
-    reader = new answer();
-    reader.read($('article').text());
-    var answers = reader.match("What is the longevity of a soap bubble limited by?");
-
-    console.log(answers[0][1]);
-  </script>
 
 </body>
 </html>

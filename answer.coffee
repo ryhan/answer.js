@@ -15,6 +15,8 @@ class @answer
 
   read: (article) -> 
     stem = @stem
+
+    article = article.replace(/Dr./g, "Dr")
     sentences = @sentences.concat article.split(".")
     stemmed = _.map(sentences, (text) -> stem text )
 
@@ -29,6 +31,5 @@ class @answer
     stemA = @stem sentence
 
     scores = _.map(stemmedCorpus, (stemB) -> sentenceSimilarity(stemA, stemB))
-    _.sortBy(_.zip(scores, corpus), (x) -> -1 * x[0])
-
-
+    ranked = _.sortBy(_.zip(scores, corpus), (x) -> -1 * x[0])
+    _.filter(ranked, (score) -> (score[0] > 0))
