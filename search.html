@@ -33,14 +33,28 @@ $(function() {
   // Use Underscore to prevent the function from being called too often.
   var spot = _.debounce(function(query){
     var answers = reader.match(query);
+    var words = query.split(" ");
 
     var container = $('<div />');
     _.map(answers.slice(0,3), function(answer){
-      container.append($('<li />').text(answer[1] + "."));
+      var text = answer[1] + ".";
+      _.map(words, function(word){
+        text = text.replace(" " +word, " <strong>"+word + "</strong>");
+      });
+      container.append($('<li />').html(text));
     });
 
-    $results.html(container.html());
-  }, 100);
+    var newHTML = container.html();
+
+    if (answers.length == 0){
+      newHTML = "<li>...</li>";
+    }
+
+    if ($results.html() != newHTML){
+      $results.html(newHTML); 
+    }
+    
+  }, 200);
 
   $input.focus(function(){
     $search.addClass('active');
@@ -65,10 +79,11 @@ $(function() {
   </form>
 
   <article class="content">
+  <h1>Soap Bubbles</h1>
   <p>
   A soap bubble is an extremely thin film of soapy water enclosing air that forms a hollow sphere with an iridescent surface. Soap bubbles usually last for only a few seconds before bursting, either on their own or on contact with another object. They are often used for children's enjoyment, but they are also used in artistic performances. Assembling several bubbles results in a foam.</p>
   
-  <h1>Mathematics</h1>
+  <h2>Mathematics</h2>
   <p>Soap bubbles are physical illustrations of the complex mathematical problem of minimal surface. They will assume the shape of least surface area possible containing a given volume. A true minimal surface is more properly illustrated by a soap film, which has equal pressure on inside as outside, hence is a surface with zero mean curvature. A soap bubble is a closed soap film: due to the difference in outside and inside pressure, it is a surface of constant mean curvature.</p>
   <p>While it has been known since 1884 that a spherical soap bubble is the least-area way of enclosing a given volume of air (a theorem of H. A. Schwarz), it was not until 2000 that it was proven that two merged soap bubbles provide the optimum way of enclosing two given volumes of air of different size with the least surface area. This has been dubbed the Double Bubble conjecture.[1]</p>
   <p>Due to these qualities soap bubbles films have been used with practical problem solving application. Structural engineer Frei Otto used soap bubble films to determine the geometry of a sheet of least surface area that spreads between several points, and translated this geometry into revolutionary tensile roof structures.[2] A famous example is his West German Pavilion at Expo 67 in Montreal.</p>  
